@@ -20,9 +20,10 @@ angular.module('PeopleApp', ['ngMaterial'])
         ]
 
         $scope.findDescendants = function (parent, people) {
-            // TODO return an array with the names of all descendants of "parent" in "people"
-            // return [];
-/*
+            
+            // return an array with the names of all descendants of "parent" in "people"
+            // NOTE: Fix to include levels from great-grand-parents and above!
+            
             var descendants = [];
 
             descendants.push(parent.children.join(', '));
@@ -35,14 +36,7 @@ angular.module('PeopleApp', ['ngMaterial'])
                 }
             }
             return [descendants.join(', ')];
-*/
 
-            var descendants = [];
-            descendants.push(parent.children.join(', '));
-            for (var i = 0; i < parent.children.length; i++) {
-                descendants.push(findDescendants(parent.children[i], people));
-            }
-            return [descendants.join(', ')];
         }
 
         $scope.person = {name: '', children: []};
