@@ -37,18 +37,7 @@ sub UnescapeString
 }
 
 open (IDL,"| /usr/local/bin/idl");
-#/usr/local/bin/idl");
-
-######################  Muf Peru  ##########################
-#print IDL "!path = !path + ':./library'\n";
-#print IDL "mufperu, latitud=",$values{"latitud"},", longitud=",$values{"longitud"},"\n";
-#print IDL "mufperu, latitud=-10, longitud=-77\n";
-#print IDL "mufnowahead\n";
-#print IDL "print, 'Ronald'\n";
-#print IDL "vdrift_model, pp=100, figfilen='/dev/stdout'\n";
 print IDL "density_dps, pp=100, figfilen='/dev/stdout'\n";
 print IDL "exit\n";
 
 exit 0;
-
-
