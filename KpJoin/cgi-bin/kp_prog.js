@@ -1,6 +1,4 @@
-//<!--
 var sitestr = ['est','def'];
-
 
 function calendar_cgi(year,month,calendar_web)
 { 
@@ -24,5 +22,3 @@ function kp_page(image,datafile,webpage)
   webpage.document.writeln('</body></html>');
   webpage.document.close();
 }
-
-//-->
