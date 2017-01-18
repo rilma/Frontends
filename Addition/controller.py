@@ -10,7 +10,7 @@ def index():
     form = InputForm(request.form)
     if request.method == 'POST' and form.validate():
         a = form.a.data
-        b = form.a.data
+        b = form.b.data
         s = compute(a, b)
     else:
         s = None
