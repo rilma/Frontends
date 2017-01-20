@@ -1,0 +1,15 @@
+<form method=post action="">
+<table>
+    {% for field in form %}
+    <tr>
+        <td> {{ field.label }} </td>
+        <td> {{ field(size=12) }} </td>
+    </tr>
+    {% endfor %}
+</table>
+<p><input type=submit value=Plot></form></p>
+<p>
+    {% if result != None %}
+    <img src="data:image/png;base64, {{ result }}" width="500">
+    {% endif %}
+</p>
