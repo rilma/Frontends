@@ -5,6 +5,6 @@ Front-end development.
 
 2. Electron density
 
-3. Simple interface to add two numbers in [Flask] (https://github.com/rilma/Frontends/tree/master/Addition)
+3. Simple [interface] (https://github.com/rilma/Frontends/tree/master/Addition) to add two numbers in Flask.
 
-4. User input equation interface in [Flask] (https://github.com/rilma/Frontends/tree/master/UserEquation)
+4. [User input] (https://github.com/rilma/Frontends/tree/master/UserEquation) equation interface in Flask.
