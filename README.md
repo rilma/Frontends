@@ -9,4 +9,4 @@ Front-end development.
 
 4. [User input] (https://github.com/rilma/Frontends/tree/master/UserEquation) equation interface in Flask.
 
-5. React [example] (tree/master/AddItem) which add items into a web frame.
+5. React [example] (https://github.com/rilma/Frontends/tree/master/AddItem) which add items into a web frame.
