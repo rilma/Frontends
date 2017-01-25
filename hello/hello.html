@@ -1,1 +1,83 @@
+<html>
+  <head>
+    <style>
+      .blue { color: steelblue; }
+      .red { color: tomato; }
+    </style>
+  </head>
+  <body>
+    <script>
+      function VText(text) {
+        this.text = text;
+      }
 
+      VText.prototype.render = function() {
+        return document.createTextNode(this.text)
+      }
+
+      function VElem(tag, props, children) {
+        this.tag = tag;
+        this.props = props || {};
+        this.children = children || [];
+      }
+
+      VElem.prototype.render = function() {
+        var elem = document.createElement(this.tag);
+
+        for (var name in this.props) {
+          var value = this.props[name];
+          if (name.indexOf('on') === 0) {
+            var eventName = name.substring(2);
+            elem.addEventListener(eventName, value)
+          } else {
+            elem.setAttribute(name, value);
+          }
+        }
+
+        this.children.forEach(function(child) {
+          elem.appendChild(child.render());
+        });
+
+        return elem;
+      }
+
+      function el(tag, props, children) {
+        if (Array.isArray(props)) {
+          children = props;
+          props = {};
+        }
+
+        children.forEach(function(child, i) {
+          if (typeof child === 'string') {
+            children[i] = new VText(child);
+          }
+        });
+
+        return new VElem(tag, props, children);
+      }
+
+      function removeChildNodes(elem) {
+        while (elem.firstChild) {
+          var first = elem.firstChild;
+          first.parentNode.removeChild(first);
+        }
+      }
+
+      function mount(elem, tree) {
+        removeChildNodes(elem);
+        elem.appendChild(tree.render());
+      }
+
+      mount(document.body, el('div', {id: 'root'}, [
+        el('ul', [
+          el('li', {'class': 'red'}, ['item 1']),
+          el('li', {'class': 'blue'}, ['item 2']),
+          el('li', {'class': 'red'}, ['item 3'])
+        ]),
+        el('button', {onclick: function() { alert('clicked') }}, ['hello!'])
+      ]));
+
+
+    </script>
+  </body>
+</html>
