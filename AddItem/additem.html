@@ -1,1 +1,162 @@
+<html>
+  <head>
+    <style>
+      .blue { color: steelblue; }
+      .red { color: tomato; }
+    </style>
+  </head>
+  <body>
+    <script>
 
+      /*** YOU IMPLEMENT ***/
+
+     /*
+      *  initialState: State,
+      *  actions: Object<String, Action>,
+      *  onStateSet: (State) => ()
+      */
+      function Store(initialState, actions, onStateSet) {
+        this.state = initialState;
+        this.onStateSet = onStateSet
+
+        this.actions = {};
+        for (var name in actions) {
+          var action = actions[name];
+          this.actions[name] = this.makeHandler(action).bind(this);
+        }
+      }
+
+      Store.prototype.makeHandler = function(action) {
+        return function() {
+          var state = this.getState();
+          this.state = action(state);
+          return this.onStateSet(this);
+        }
+      }
+
+      // Return state
+      Store.prototype.getState = function() {
+        return this.state;
+      }
+
+      function Component(renderFn) {
+        this.renderFn = renderFn;
+      }
+
+      Component.prototype.render = function(store) {
+        var tree = this.renderFn(store);
+        return tree.render(store);
+      }
+
+      /*** PREVIOUS CODE ***/
+      function VText(text) {
+        this.text = text;
+      }
+
+      VText.prototype.render = function() {
+        return document.createTextNode(this.text);
+      }
+
+      function VElem(tag, props, children) {
+        this.tag = tag;
+        this.props = props || {};
+        this.children = children || [];
+      }
+
+      // UPDATE RENDER
+      VElem.prototype.render = function() {
+        var elem = document.createElement(this.tag);
+
+        for (var name in this.props) {
+          var value = this.props[name];
+          if (name.indexOf('on') === 0) {
+            var eventName = name.substring(2);
+            elem.addEventListener(eventName, value)
+          } else {
+            elem.setAttribute(name, value);
+          }
+        }
+
+        this.children.forEach(function(child) {
+          elem.appendChild(child.render());
+        });
+
+        return elem;
+      }
+
+      function el(tag, props, children) {
+        if (Array.isArray(props)) {
+          children = props;
+          props = {};
+        }
+
+        children.forEach(function(child, i) {
+          if (typeof child === 'string') {
+            children[i] = new VText(child);
+          }
+        });
+
+        return new VElem(tag, props, children);
+      }
+
+      function removeChildNodes(elem) {
+        while (elem.firstChild) {
+          var first = elem.firstChild;
+          first.parentNode.removeChild(first);
+        }
+      }
+
+      function mount(elem, store, tree) {
+        removeChildNodes(elem);
+        elem.appendChild(tree.render(store));
+      }
+
+
+      /*** SAMPLE APP ***/
+      var app = new Component(function(store) {
+        var state = store.getState();
+        var count = state.count;
+
+        var color = count % 2 === 0 ? 'red' : 'blue';
+
+        var items = [];
+        for (var i = 0; i < count; i++) {
+          items.push(el('li', ['item ', i.toString()]));
+        }
+
+        return el('div', [
+          el('h3', {'class': color}, [
+            'There are ',
+            count.toString(),
+            ' items'
+          ]),
+          el('button', {'onclick': store.actions.decrement}, ['-']),
+          el('button', {'onclick': store.actions.increment}, ['+']),
+          el('ul', items)
+        ])
+      })
+
+      function mountApp(store) {
+        return mount(document.body, store, app);
+      }
+
+      var store = new Store({count: 0}, {
+        increment: function(state) {
+          var count = state.count + 1;
+          return {count: count};
+        },
+
+        decrement: function(state) {
+          var count = state.count ? state.count - 1 : state.count;
+          return {count: count};
+        }
+      }, function(store) {
+        mountApp(store);
+      })
+
+      // initial mount
+      mountApp(store);
+
+    </script>
+  </body>
+</html>
