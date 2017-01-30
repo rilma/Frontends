@@ -1,7 +1,7 @@
 # Frontends
 Front-end development.
 
-1. These [scripts] (https://github.com/rilma/Frontends) corresponds to the [Kp Index] (http://jro.igp.gob.pe/database/kpindex/html/kpjoin.htm) online database.
+1. These [scripts] (https://github.com/rilma/Frontends) are the framework of the [Kp Index] (http://jro.igp.gob.pe/database/kpindex/html/kpjoin.htm) online database.
 
 2. Electron density web app [source code] (https://github.com/rilma/Frontends/tree/master/Density).
 
