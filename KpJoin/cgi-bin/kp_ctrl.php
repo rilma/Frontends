@@ -13,7 +13,6 @@
 
  include ("phpmag.php");
  $site = "est";
-// $site = strtolower($site);
  if ($site=="est") $type = 0;
  if ($site=="def") $type = 1;
  $path = array("../data/","../data_wdc/");
@@ -125,9 +124,6 @@
 		<option selected>Month</option>
 		<option>___________</option>
 	</select> 
-<!--
-<input type="button" name="button" value="View" onclick="ctrl_month(this.form,parent.frame3)"></p>
--->
 </form>
 
 </html>
